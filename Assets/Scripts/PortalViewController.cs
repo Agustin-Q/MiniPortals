@@ -7,7 +7,9 @@ public class PortalViewController : MonoBehaviour
 {
     public GameObject otherPortal;
     public GameObject otherPortalCamera;
-    public GameObject playerCamera; 
+    public GameObject playerCamera;
+    public float nearClipOffset = 0.05f;
+    public float nearClipLimit = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +40,36 @@ public class PortalViewController : MonoBehaviour
         //rotar la camara al mismo angulo que la camara del jugador
         otherPortalCamera.transform.rotation = playerCamera.transform.rotation;
 
+        SetNearClipPlane();
     }
 
-    void LogPosition(Vector3 pos, string name ="")
+    void SetNearClipPlane()
     {
-        Debug.Log(name + " Position: " + pos.x + ", " + pos.y + ", " + pos.z);
+        // Learning resource:
+        // http://www.terathon.com/lengyel/Lengyel-Oblique.pdf
+
+        Camera portalCam = otherPortalCamera.GetComponent<Camera>();
+        Camera playerCam = playerCamera.GetComponent<Camera>();
+
+        Transform clipPlane = otherPortal.transform;
+        int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, transform.position - portalCam.transform.position));
+
+        Vector3 camSpacePos = portalCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
+        Vector3 camSpaceNormal = portalCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
+        float camSpaceDst = -Vector3.Dot(camSpacePos, camSpaceNormal) + nearClipOffset;
+
+        // Don't use oblique clip plane if very close to portal as it seems this can cause some visual artifacts
+        if (Mathf.Abs(camSpaceDst) > nearClipLimit)
+        {
+            Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
+
+            // Update projection based on new clip plane
+            // Calculate matrix with player cam so that player camera settings (fov, etc) are used
+            portalCam.projectionMatrix = playerCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
+        }
+        else
+        {
+            portalCam.projectionMatrix = playerCam.projectionMatrix;
+        }
     }
 }

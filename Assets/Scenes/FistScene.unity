@@ -6422,15 +6422,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304594982}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 3.1, y: 1.113, z: 6.95}
+  m_LocalRotation: {x: -0.00000013240823, y: 0.7071068, z: -0.7071068, w: -0.00000013240823}
+  m_LocalPosition: {x: -18.56, y: 10.23, z: 10.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1382437313}
   - {fileID: 664966082}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180.00002, z: 0}
 --- !u!114 &1304594984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6446,6 +6446,8 @@ MonoBehaviour:
   otherPortal: {fileID: 1717089068}
   otherPortalCamera: {fileID: 1815443409}
   playerCamera: {fileID: 2132111971}
+  nearClipOffset: 0.05
+  nearClipLimit: 0.2
 --- !u!1001 &1305468015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7051,10 +7053,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382437312}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1382437315
@@ -8442,10 +8444,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689294681}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1689294684
@@ -8809,7 +8811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717089068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.93, y: 1.113, z: 1.88}
+  m_LocalPosition: {x: -2.93, y: 1.113, z: -0.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1689294682}
@@ -8832,6 +8834,8 @@ MonoBehaviour:
   otherPortal: {fileID: 1304594982}
   otherPortalCamera: {fileID: 664966081}
   playerCamera: {fileID: 2132111971}
+  nearClipOffset: 0.05
+  nearClipLimit: 0.2
 --- !u!1001 &1724454291
 PrefabInstance:
   m_ObjectHideFlags: 0
