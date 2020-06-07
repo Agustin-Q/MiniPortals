@@ -26,7 +26,7 @@ public class ViewController : MonoBehaviour
         float movementY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         yRotation -= movementY;
-
+        yRotation = Mathf.Clamp(yRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(yRotation, 0, 0);
         playerTransform.Rotate(Vector3.up, movementX);
     }

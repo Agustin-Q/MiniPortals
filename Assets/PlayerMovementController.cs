@@ -5,18 +5,18 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
 
-    CharacterController characterController;
+    Rigidbody characterRB;
     public float speed = 1f;
     private float speedDivider = 1f;
     // Start is called before the first frame update
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
-        if (characterController == null) Debug.LogError("Objet must not be null", characterController);
+        characterRB = GetComponent<Rigidbody>();
+        if (characterRB == null) Debug.LogError("Objet must not be null", characterRB);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float movementX = Input.GetAxis("Horizontal");
         float movementZ = Input.GetAxis("Vertical");
@@ -24,8 +24,20 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 move = new Vector3();
         move = transform.right * movementX + transform.forward * movementZ;
         move.Normalize();
-        move = move * (speed/speedDivider) * Time.deltaTime;
-        characterController.Move(move);
+        move = move * (speed/speedDivider);
+        Debug.Log(move.ToString());
+        HorizontalMove(move);
+
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Debug.Log("Jump");
+        }
+
+    }
+
+    private void HorizontalMove(Vector3 movement)
+    {
+        movement.y = characterRB.velocity.y;
+        characterRB.velocity = movement;
 
     }
 }
