@@ -48,7 +48,7 @@ public class PortalViewController : MonoBehaviour
         //pasar a worl space respecto del otro portal
         Vector3 dirOfOtherCamera = otherPortal.transform.TransformDirection(relDirToPortal);
         //setear rotation con este vector
-        otherPortalCamera.transform.rotation = Quaternion.LookRotation(dirOfOtherCamera);
+        otherPortalCamera.transform.rotation = Quaternion.LookRotation(dirOfOtherCamera, otherPortal.transform.up);
 
 
         SetNearClipPlane();
