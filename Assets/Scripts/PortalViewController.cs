@@ -24,8 +24,7 @@ public class PortalViewController : MonoBehaviour
         //igual la configuracion de la camara del portal a la camara del jugador
         otherPortalCamera.GetComponent<Camera>().projectionMatrix = playerCamera.GetComponent<Camera>().projectionMatrix;
 
-        //calcular direccion al protal
-        Vector3 dirToPortal = transform.position - playerCamera.transform.position;
+        
 
 
 
@@ -37,8 +36,20 @@ public class PortalViewController : MonoBehaviour
         PCLPosition = Quaternion.Euler(0, 180, 0) * PCLPosition;
         otherPortalCamera.transform.position = otherPortal.transform.TransformPoint( PCLPosition);
 
-        //rotar la camara al mismo angulo que la camara del jugador
-        otherPortalCamera.transform.rotation = playerCamera.transform.rotation;
+        //rotar la camara al mismo angulo que la camara del jugador pero tiene que ser relativo
+        
+        //calcular direccion de la camara del juador
+        //Vector3 dirToPortal = transform.position - playerCamera.transform.position;
+        Vector3 playerCameraDir = playerCamera.transform.rotation * Vector3.forward;
+        //encontrar la direccion relativa de la camara del jugador al primer portal
+        Vector3 relDirToPortal = transform.InverseTransformDirection(playerCameraDir);
+        //girar el vector 180 respecto del eje Y (esto hay que revisar si sempre es asi)
+        relDirToPortal = Quaternion.Euler(0, 180, 0) * relDirToPortal;
+        //pasar a worl space respecto del otro portal
+        Vector3 dirOfOtherCamera = otherPortal.transform.TransformDirection(relDirToPortal);
+        //setear rotation con este vector
+        otherPortalCamera.transform.rotation = Quaternion.LookRotation(dirOfOtherCamera);
+
 
         SetNearClipPlane();
     }
