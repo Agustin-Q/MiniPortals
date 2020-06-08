@@ -47,7 +47,7 @@ public class PortalController : MonoBehaviour
             float angleBetweenPortals = otherPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y ;
             float absRotation = angleBetweenPortals + Teleportable.transform.rotation.eulerAngles.y;
             // rotar el jugador con ese angulo. Esto no es bueno ya que solo funciona con los portales verticales, y probablemente el FPAIO tampoco funicone con el judador invertido y esta funcionalidad tiene que estar.
-            Teleportable.GetComponent<FirstPersonAIO>().RotateCamera(new Vector2(0, absRotation),true);
+            Teleportable.GetComponent<FirstPersonAIO>().RotateCamera(new Vector2(0, absRotation),true); // esta fncion seta la orientacion en valor absoluto, no es bueno, queremos que todo sea relativo a los protales
             
             otherPortalController.AddIncomingTraveller(Teleportable);
             traveller = null;

@@ -743,6 +743,11 @@ PrefabInstance:
       propertyPath: autoCrosshair
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114051214696948948, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 136239539305442568, guid: 2e62f5703e5f8d2488a5e1bc8433be41,
         type: 3}
       propertyPath: m_Height
@@ -6408,6 +6413,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1304594983}
   - component: {fileID: 1304594984}
+  - component: {fileID: 1304594985}
+  - component: {fileID: 1304594986}
   m_Layer: 0
   m_Name: PortalB
   m_TagString: Untagged
@@ -6422,15 +6429,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304594982}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -29.68, y: 7.008, z: 5.42}
+  m_LocalRotation: {x: 0, y: 0.55113626, z: 0, w: 0.83441526}
+  m_LocalPosition: {x: -26.74, y: 7.008, z: 5.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1382437313}
   - {fileID: 664966082}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 66.89, z: 0}
 --- !u!114 &1304594984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6448,6 +6455,32 @@ MonoBehaviour:
   playerCamera: {fileID: 2132111971}
   nearClipOffset: 0.05
   nearClipLimit: 0.2
+--- !u!114 &1304594985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304594982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da7527536e797944a3792fa09f5330f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherPortal: {fileID: 1717089068}
+--- !u!65 &1304594986
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304594982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1305468015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7023,7 +7056,6 @@ GameObject:
   - component: {fileID: 1382437313}
   - component: {fileID: 1382437316}
   - component: {fileID: 1382437315}
-  - component: {fileID: 1382437314}
   m_Layer: 0
   m_Name: PortalBPlane
   m_TagString: Untagged
@@ -7045,20 +7077,6 @@ Transform:
   m_Father: {fileID: 1304594983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!64 &1382437314
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382437312}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1382437315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8414,7 +8432,6 @@ GameObject:
   - component: {fileID: 1689294682}
   - component: {fileID: 1689294685}
   - component: {fileID: 1689294684}
-  - component: {fileID: 1689294683}
   m_Layer: 0
   m_Name: PortalAPlane
   m_TagString: Untagged
@@ -8436,20 +8453,6 @@ Transform:
   m_Father: {fileID: 1717089069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!64 &1689294683
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689294681}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1689294684
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8796,6 +8799,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1717089069}
   - component: {fileID: 1717089070}
+  - component: {fileID: 1717089071}
+  - component: {fileID: 1717089072}
   m_Layer: 0
   m_Name: PortalA
   m_TagString: Untagged
@@ -8836,6 +8841,32 @@ MonoBehaviour:
   playerCamera: {fileID: 2132111971}
   nearClipOffset: 0.05
   nearClipLimit: 0.2
+--- !u!114 &1717089071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717089068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da7527536e797944a3792fa09f5330f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherPortal: {fileID: 1304594982}
+--- !u!65 &1717089072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717089068}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1724454291
 PrefabInstance:
   m_ObjectHideFlags: 0
