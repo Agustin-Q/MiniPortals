@@ -48,12 +48,24 @@ public class PortalController : MonoBehaviour
     {
         if (otherPortal != null)
         {
-            Teleportable.transform.position = otherPortal.transform.position;
+            // encontrar la posicion relativa del objeto al portal en coordenadas locales
+            Vector3 relPos = transform.InverseTransformPoint(Teleportable.transform.position);
+            Debug.Log("relPos: " + relPos.ToString("F3"));
+            //girar el vector 180 grados respecto de y
+            Vector3 relPosGirado = Quaternion.Euler(0, 180, 0) * relPos; //estaba con esta linea, para calcular la nueva posicion en el otro portal
+            Debug.Log("relPosGirado: " + relPosGirado.ToString("F3"));
+            // encontrar posicion absoluta respecto de la posicion relativa al segundo portal
+            Vector3 absPos = otherPortal.transform.TransformPoint(relPosGirado);
+            Debug.Log("absPos: " + absPos.ToString("F3"));
+            // mover el objeto a la nueva posicion.
+            Teleportable.transform.position = absPos;
+            Debug.Log("Teleportable.transform.position: " + Teleportable.transform.position.ToString("F3"));
             // calcular angulos entre los dos portales es la cantidad a rotar el judador
             float angleBetweenPortals = otherPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y ;
             float absRotation = angleBetweenPortals + Teleportable.transform.rotation.eulerAngles.y;
             // rotar el jugador con ese angulo. Esto no es bueno ya que solo funciona con los portales verticales, y probablemente el FPAIO tampoco funicone con el judador invertido y esta funcionalidad tiene que estar.
-            Teleportable.GetComponent<FirstPersonAIO>().RotateCamera(new Vector2(0, absRotation),true); // esta fncion seta la orientacion en valor absoluto, no es bueno, queremos que todo sea relativo a los protales
+            float lookAngle= Teleportable.GetComponent<FirstPersonAIO>().targetAngles.x;
+            Teleportable.GetComponent<FirstPersonAIO>().RotateCamera(new Vector2(lookAngle, absRotation),true); // esta fncion seta la orientacion en valor absoluto, no es bueno, queremos que todo sea relativo a los protales
             
             otherPortalController.AddTraveller(Teleportable);
         }

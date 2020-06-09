@@ -24,10 +24,6 @@ public class PortalViewController : MonoBehaviour
         //igual la configuracion de la camara del portal a la camara del jugador
         otherPortalCamera.GetComponent<Camera>().projectionMatrix = playerCamera.GetComponent<Camera>().projectionMatrix;
 
-        
-
-
-
         //mover la camara del otro protal
      
         //obtener coordenadas de la camara del juagdor en espacio local respceto del portal
@@ -39,7 +35,6 @@ public class PortalViewController : MonoBehaviour
         //rotar la camara al mismo angulo que la camara del jugador pero tiene que ser relativo
         
         //calcular direccion de la camara del juador
-        //Vector3 dirToPortal = transform.position - playerCamera.transform.position;
         Vector3 playerCameraDir = playerCamera.transform.rotation * Vector3.forward;
         //encontrar la direccion relativa de la camara del jugador al primer portal
         Vector3 relDirToPortal = transform.InverseTransformDirection(playerCameraDir);
