@@ -64,7 +64,7 @@ public class PortalViewController : MonoBehaviour
         Camera playerCam = playerCamera;
 
         Transform clipPlane = otherPortal.transform;
-        int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, transform.position - portalCam.transform.position));
+        int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, otherPortal.transform.position - portalCam.transform.position));
 
         Vector3 camSpacePos = portalCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
         Vector3 camSpaceNormal = portalCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
