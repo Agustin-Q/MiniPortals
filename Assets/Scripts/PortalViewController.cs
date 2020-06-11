@@ -6,14 +6,20 @@ using UnityEngine;
 public class PortalViewController : MonoBehaviour
 {
     public GameObject otherPortal;
-    public GameObject otherPortalCamera;
-    public GameObject playerCamera;
+    public Camera otherPortalCamera;
+    private Camera playerCamera;
     public float nearClipOffset = 0.05f;
     public float nearClipLimit = 0.2f;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        playerCamera = Camera.main;
+        
+    }
+
     void Start()
     {
-       
+   
     }
 
     // Update is called once per frame
@@ -22,7 +28,7 @@ public class PortalViewController : MonoBehaviour
 
 
         //igual la configuracion de la camara del portal a la camara del jugador
-        otherPortalCamera.GetComponent<Camera>().projectionMatrix = playerCamera.GetComponent<Camera>().projectionMatrix;
+        otherPortalCamera.projectionMatrix = playerCamera.projectionMatrix;
 
         //mover la camara del otro protal
      
@@ -54,8 +60,8 @@ public class PortalViewController : MonoBehaviour
         // Learning resource:
         // http://www.terathon.com/lengyel/Lengyel-Oblique.pdf
 
-        Camera portalCam = otherPortalCamera.GetComponent<Camera>();
-        Camera playerCam = playerCamera.GetComponent<Camera>();
+        Camera portalCam = otherPortalCamera;
+        Camera playerCam = playerCamera;
 
         Transform clipPlane = otherPortal.transform;
         int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, transform.position - portalCam.transform.position));
