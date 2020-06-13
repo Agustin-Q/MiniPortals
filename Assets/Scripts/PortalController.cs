@@ -20,11 +20,6 @@ public class PortalController : MonoBehaviour
     void Update()
     {
 
-        //chequear si algo toca el portal
-
-        //chequear si pasa el portal
-
-        //calcular direccion al protal
         for (int i =travellers.Count -1; i>=0; i--) //iterar la lista para atras para poder ir eliminando elementos
         {
             if (travellers[i] != null)
@@ -74,11 +69,12 @@ public class PortalController : MonoBehaviour
         }
     }
 
+    // transforma un vector en world coordinates a otro en world coordinates pero respecto del otro portal
     private Vector3 DirVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
     {
-        Vector3 relVector = T1.InverseTransformDirection(vector);
+        Vector3 relVector = T1.InverseTransformDirection(vector); //vector realitvo al primer portal
         relVector = Quaternion.Euler(0, 180, 0) * relVector; //rotrar 180 grados respecto de y
-        return T2.TransformDirection(relVector);
+        return T2.TransformDirection(relVector); //posision absoluta respecto del segudo portal
     }
 
     private Vector3 PosVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
