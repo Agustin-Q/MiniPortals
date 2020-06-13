@@ -50,17 +50,8 @@ public class PortalController : MonoBehaviour
         if (otherPortal != null)
         {
             if (teleportable.GetComponent<Teleportable>().type == "Player") {
-                // encontrar la posicion relativa del objeto al portal en coordenadas locales
-                Vector3 relPos = transform.InverseTransformPoint(teleportable.transform.position);
-                Debug.Log("relPos: " + relPos.ToString("F3"));
-                //girar el vector 180 grados respecto de y
-                Vector3 relPosGirado = Quaternion.Euler(0, 180, 0) * relPos; //estaba con esta linea, para calcular la nueva posicion en el otro portal
-                Debug.Log("relPosGirado: " + relPosGirado.ToString("F3"));
-                // encontrar posicion absoluta respecto de la posicion relativa al segundo portal
-                Vector3 absPos = otherPortal.transform.TransformPoint(relPosGirado);
-                Debug.Log("absPos: " + absPos.ToString("F3"));
-                // mover el objeto a la nueva posicion.
-                teleportable.transform.position = absPos;
+                teleportable.transform.position = PosVectorPortalTransform(teleportable.transform.position, transform, otherPortal.transform);
+
                 Debug.Log("Teleportable.transform.position: " + teleportable.transform.position.ToString("F3"));
                 // calcular angulos entre los dos portales es la cantidad a rotar el judador
                 float angleBetweenPortals = otherPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
@@ -73,10 +64,11 @@ public class PortalController : MonoBehaviour
                 teleportable.transform.position = PosVectorPortalTransform(teleportable.transform.position, transform, otherPortal.transform);
 
                 teleportable.transform.rotation = RotationRelativeToPortal(teleportable.transform.rotation, transform, otherPortal.transform);
-
+                //---- conservar las cantidad de movimiento
                 Rigidbody RB = teleportable.GetComponent<Rigidbody>();
                 RB.velocity = DirVectorPortalTransform(RB.velocity, transform, otherPortal.transform);
-
+                //---- conservar la cantidad de movmiento angular
+                RB.angularVelocity = DirVectorPortalTransform(RB.angularVelocity, transform, otherPortal.transform);
             }
             otherPortalController.AddTraveller(teleportable);
         }
@@ -102,14 +94,14 @@ public class PortalController : MonoBehaviour
         //Debug.Log("absPos: " + absPos.ToString("F3"));
         return absPos;
     }
-
-    private Quaternion RotationRelativeToPortal(Quaternion teleportable, Transform T1, Transform T2)
+    // esto no esta funcionando la concha de su madre
+    private Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2) 
     {
-        Vector3 fwrVector = teleportable * Vector3.forward;
+        Vector3 fwrVector = rot * Vector3.forward;
         Vector3 relfowarVector = T1.InverseTransformDirection(fwrVector);
         relfowarVector = Quaternion.Euler(0, 180, 0) * relfowarVector;
         Vector3 absForwardVector = T2.TransformDirection(relfowarVector);
-        return Quaternion.FromToRotation(fwrVector, absForwardVector);
+        return Quaternion.LookRotation(absForwardVector,T2.up);
     }
 
     public void AddTraveller(GameObject teleportable)
