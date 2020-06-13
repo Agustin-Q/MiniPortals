@@ -97,11 +97,14 @@ public class PortalController : MonoBehaviour
     // esto no esta funcionando la concha de su madre
     private Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2) 
     {
+        /*
         Vector3 fwrVector = rot * Vector3.forward;
         Vector3 relfowarVector = T1.InverseTransformDirection(fwrVector);
         relfowarVector = Quaternion.Euler(0, 180, 0) * relfowarVector;
         Vector3 absForwardVector = T2.TransformDirection(relfowarVector);
         return Quaternion.LookRotation(absForwardVector,T2.up);
+        */
+        return T2.rotation*Quaternion.Euler(0,180,0)* Quaternion.Inverse(T1.rotation)*rot;
     }
 
     public void AddTraveller(GameObject teleportable)
