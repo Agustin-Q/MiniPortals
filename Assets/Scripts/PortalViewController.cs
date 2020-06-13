@@ -25,8 +25,6 @@ public class PortalViewController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         //igual la configuracion de la camara del portal a la camara del jugador
         otherPortalCamera.projectionMatrix = playerCamera.projectionMatrix;
 
@@ -39,19 +37,7 @@ public class PortalViewController : MonoBehaviour
         otherPortalCamera.transform.position = otherPortal.transform.TransformPoint( PCLPosition);
 
         //rotar la camara al mismo angulo que la camara del jugador pero tiene que ser relativo
-        
-        //calcular direccion de la camara del juador
-        Vector3 playerCameraDir = playerCamera.transform.rotation * Vector3.forward;
-        //encontrar la direccion relativa de la camara del jugador al primer portal
-        Vector3 relDirToPortal = transform.InverseTransformDirection(playerCameraDir);
-        //girar el vector 180 respecto del eje Y (esto hay que revisar si sempre es asi)
-        relDirToPortal = Quaternion.Euler(0, 180, 0) * relDirToPortal;
-        //pasar a worl space respecto del otro portal
-        Vector3 dirOfOtherCamera = otherPortal.transform.TransformDirection(relDirToPortal);
-        //setear rotation con este vector
-        otherPortalCamera.transform.rotation = Quaternion.LookRotation(dirOfOtherCamera, otherPortal.transform.up);
-
-
+        otherPortalCamera.transform.rotation = RotationRelativeToPortal(playerCamera.transform.rotation, transform, otherPortal.transform);
         SetNearClipPlane();
     }
 
@@ -83,5 +69,19 @@ public class PortalViewController : MonoBehaviour
         {
             portalCam.projectionMatrix = playerCam.projectionMatrix;
         }
+    }
+
+    // este metodo esta repetido en portal controller no la mejor etiqueta de programacion
+    private Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2)
+    {
+        // la linea de abajo es magica, la magia de los Quaternions,
+        // basicamente lo que hace es agarra la rotacion que le pasamos,
+        // luego la rota por la inversa de la rotacion del portal,
+        // esto nos da la rotacion realtiva al primer portal,//
+        // luego la rota 180 grados respecto de y, esto es porque estos
+        // protales lo que entrea sale por el mismo lado pero del otro portal,
+        // luego lo rota por la rotacion del segundo portal,
+        // las rotaciones se leen de derecha a izquierda
+        return T2.rotation * Quaternion.Euler(0, 180, 0) * Quaternion.Inverse(T1.rotation) * rot;
     }
 }
