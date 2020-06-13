@@ -94,16 +94,17 @@ public class PortalController : MonoBehaviour
         //Debug.Log("absPos: " + absPos.ToString("F3"));
         return absPos;
     }
-    // esto no esta funcionando la concha de su madre
+    // este metodo esta repetido en otra clase no la mejor etiqueta de programacion
     private Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2) 
     {
-        /*
-        Vector3 fwrVector = rot * Vector3.forward;
-        Vector3 relfowarVector = T1.InverseTransformDirection(fwrVector);
-        relfowarVector = Quaternion.Euler(0, 180, 0) * relfowarVector;
-        Vector3 absForwardVector = T2.TransformDirection(relfowarVector);
-        return Quaternion.LookRotation(absForwardVector,T2.up);
-        */
+        // la linea de abajo es magica, la magia de los Quaternions,
+        // basicamente lo que hace es agarra la rotacion que le pasamos,
+        // luego la rota por la inversa de la rotacion del portal,
+        // esto nos da la rotacion realtiva al primer portal,//
+        // luego la rota 180 grados respecto de y, esto es porque estos
+        // protales lo que entrea sale por el mismo lado pero del otro portal,
+        // luego lo rota por la rotacion del segundo portal,
+        // las rotaciones se leen de derecha a izquierda
         return T2.rotation*Quaternion.Euler(0,180,0)* Quaternion.Inverse(T1.rotation)*rot;
     }
 
