@@ -9,7 +9,6 @@ public class PortalController : MonoBehaviour
     
     private PortalController otherPortalController;
     private List<GameObject> travellers = new List<GameObject>();
-    private List<GameObject> clones = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -70,14 +69,14 @@ public class PortalController : MonoBehaviour
     }
 
     // transforma un vector en world coordinates a otro en world coordinates pero respecto del otro portal
-    private Vector3 DirVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
+    public Vector3 DirVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
     {
         Vector3 relVector = T1.InverseTransformDirection(vector); //vector realitvo al primer portal
         relVector = Quaternion.Euler(0, 180, 0) * relVector; //rotrar 180 grados respecto de y
         return T2.TransformDirection(relVector); //posision absoluta respecto del segudo portal
     }
 
-    private Vector3 PosVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
+    public Vector3 PosVectorPortalTransform(Vector3 vector, Transform T1, Transform T2)//esto transfroma de un portal al otro un vector;
     {
         // encontrar la posicion relativa del objeto al portal en coordenadas locales
         Vector3 relPos = T1.InverseTransformPoint(vector);
@@ -91,7 +90,7 @@ public class PortalController : MonoBehaviour
         return absPos;
     }
     // este metodo esta repetido en otra clase no la mejor etiqueta de programacion
-    private Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2) 
+    public Quaternion RotationRelativeToPortal(Quaternion rot, Transform T1, Transform T2) 
     {
         // la linea de abajo es magica, la magia de los Quaternions,
         // basicamente lo que hace es agarra la rotacion que le pasamos,
@@ -108,17 +107,11 @@ public class PortalController : MonoBehaviour
     {
         if (!travellers.Contains(teleportable))
         {
+            teleportable.GetComponent<Teleportable>().OnPortalEnter(this, otherPortalController);
             travellers.Add(teleportable);
         }
     }
 
-    public void addClone(GameObject dummyClone)
-    {
-        if (!clones.Contains(dummyClone))
-        {
-            travellers.Add(dummyClone);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -134,6 +127,7 @@ public class PortalController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        other.GetComponent<Teleportable>().OnPortalLeave(this);
         travellers.Remove(other.gameObject);
     }
 
