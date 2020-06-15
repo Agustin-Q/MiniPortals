@@ -6,15 +6,30 @@ using UnityEngine;
 public class PortalViewController : MonoBehaviour
 {
     public GameObject otherPortal;
-    public Camera otherPortalCamera;
+    private Camera otherPortalCamera;
     private Camera playerCamera;
+    private RenderTexture renderTexture;
     public float nearClipOffset = 0.05f;
     public float nearClipLimit = 0.2f;
+    public Shader portalShader;
+    private Material portalMaterial;
     // Start is called before the first frame update
     private void Awake()
     {
         playerCamera = Camera.main;
-        
+        otherPortalCamera = otherPortal.GetComponentInChildren<Camera>();
+        //setup textures
+        renderTexture = new RenderTexture(1024, 1024, 24);
+        //setup other portal camera to output to other portal render texture
+        otherPortalCamera.targetTexture = renderTexture;
+        //generate material
+        portalMaterial = new Material(portalShader);
+        // agregar la textura al material
+        portalMaterial.SetTexture("PortalTexture", renderTexture);
+        //buscar el material de la pantalla del portal y asignar el material
+        MeshRenderer portalScreen = GetComponentInChildren<MeshRenderer>(); //tiene que haber un solo MeshReneder en el protal
+        portalScreen.material = portalMaterial;
+         
     }
 
     void Start()
