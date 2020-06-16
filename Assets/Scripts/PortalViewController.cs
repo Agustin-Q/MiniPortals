@@ -12,6 +12,7 @@ public class PortalViewController : MonoBehaviour
     public float nearClipOffset = 0.05f;
     public float nearClipLimit = 0.2f;
     public Shader portalShader;
+    public Color portalColor = new Color(1.0f,0.8f,0.0f);
     private Material portalMaterial;
     // Start is called before the first frame update
     private void Awake()
@@ -26,6 +27,8 @@ public class PortalViewController : MonoBehaviour
         portalMaterial = new Material(portalShader);
         // agregar la textura al material
         portalMaterial.SetTexture("PortalTexture", renderTexture);
+        // setear el color del portal
+        portalMaterial.SetColor("PortalColor", portalColor);
         //buscar el material de la pantalla del portal y asignar el material
         MeshRenderer portalScreen = GetComponentInChildren<MeshRenderer>(); //tiene que haber un solo MeshReneder en el protal
         portalScreen.material = portalMaterial;
