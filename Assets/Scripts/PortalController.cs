@@ -28,7 +28,7 @@ public class PortalController : MonoBehaviour
                 Vector3 portalNormalVect = transform.rotation * Vector3.forward;
                 if (Vector3.Dot(dirTravelerToPortal, portalNormalVect) > 0f)
                 {
-                    Debug.Log("cruzo");
+                    //Debug.Log("cruzo");
                     Teleport(travellers[i]);
                     //sacar al traveller de la lista
                     travellers.RemoveAt(i);
@@ -46,7 +46,7 @@ public class PortalController : MonoBehaviour
             if (teleportable.GetComponent<Teleportable>().type == "Player") {
                 teleportable.transform.position = PosVectorPortalTransform(teleportable.transform.position, transform, otherPortal.transform);
 
-                Debug.Log("Teleportable.transform.position: " + teleportable.transform.position.ToString("F3"));
+                //Debug.Log("Teleportable.transform.position: " + teleportable.transform.position.ToString("F3"));
                 // calcular angulos entre los dos portales es la cantidad a rotar el judador
                 float angleBetweenPortals = otherPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
                 float absRotation = angleBetweenPortals + teleportable.transform.rotation.eulerAngles.y;
@@ -115,7 +115,7 @@ public class PortalController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision with: " + other.name);
+        //Debug.Log("Collision with: " + other.name);
         //verificar que sea algo "teletransportable"
         Teleportable teleportableObject = other.GetComponent<Teleportable>();
         if (teleportableObject)
