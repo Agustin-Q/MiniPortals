@@ -38,7 +38,7 @@ public class Teleportable : MonoBehaviour
 
     public void OnPortalEnter(PortalController m_CurrentPortal, PortalController m_OtherPortal) // tecincamente no es un evento, lo llama directo el protal
     {
-        Debug.Log("OnPortalEnter");
+        //Debug.Log("OnPortalEnter");
         currentPortal = m_CurrentPortal;
         otherPortal = m_OtherPortal;
         graphicsClone.SetActive(true);
@@ -48,7 +48,7 @@ public class Teleportable : MonoBehaviour
     public void OnPortalLeave(PortalController portal) // tecincamente no es un evento, lo llama directo el protal
     {
         if (currentPortal.Equals(portal)){ //igorar si estoy ya entre a orto portal
-            Debug.Log("OnPortalLeave");
+           // Debug.Log("OnPortalLeave");
             currentPortal = null;
             otherPortal = null;
             graphicsClone.SetActive(false);
@@ -63,19 +63,24 @@ public class Teleportable : MonoBehaviour
         graphicsClone = Instantiate(gameObject);
         graphicsClone.SetActive(false);
         Component[] components = graphicsClone.GetComponentsInChildren<Component>();
-        Debug.Log("----- components del clone -----");
+        //Debug.Log("----- components del clone -----");
 
         for (int i = components.Length - 1; i >= 0; i--)
         {
             string typeString = components[i].GetType().ToString();
-            Debug.Log(typeString);
+            //Debug.Log(typeString);
             if (!components[i].GetType().Equals(typeof(MeshFilter)) && !components[i].GetType().Equals(typeof(MeshRenderer)) && !components[i].GetType().Equals(typeof(Transform)))
             {
                 Destroy(components[i]);
-                Debug.Log("Destruido!!!!");
+                //Debug.Log("Destruido!!!!");
 
             }
         }
     }
-   
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("colision!!! de objeto: " + this.name + " con " + collision.transform.name);
+    }
+
 }
